@@ -4,7 +4,6 @@ module Mailman
   module Receiver
     # Receives messages using POP3, and passes them to a {MessageProcessor}.
     class POP3
-
       # @return [Net::POP3] the POP3 connection
       attr_reader :connection
 
@@ -17,7 +16,7 @@ module Mailman
       # @option options [String] :password the password to authenticate with
       # @option options [true,false,Hash] :ssl enable SSL
       def initialize(options)
-        options = {:keep_messages => false}.merge(options)
+        options = { keep_messages: false }.merge(options)
         @processor = options[:processor]
         @username = options[:username]
         @password = options[:password]
@@ -50,7 +49,7 @@ module Mailman
           begin
             @processor.process(message.pop)
           rescue StandardError => error
-            Mailman.logger.error "Error encountered processing message: #{message.inspect}\n #{error.class.to_s}: #{error.message}\n #{error.backtrace.join("\n")}"
+            Mailman.logger.error "Error encountered processing message: #{message.inspect}\n #{error.class}: #{error.message}\n #{error.backtrace.join("\n")}"
             next
           end
         end
