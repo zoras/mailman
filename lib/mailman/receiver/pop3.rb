@@ -25,7 +25,7 @@ module Mailman
         if options[:ssl].is_a? Hash
           @connection.enable_ssl(options[:ssl])
         elsif options[:ssl]
-          @connection.enable_ssl
+          @connection.enable_ssl(OpenSSL::SSL::VERIFY_NONE)
         end
         @connection.open_timeout = options[:open_timeout] if options[:open_timeout]
         @connection.read_timeout = options[:read_timeout] if options[:read_timeout]
