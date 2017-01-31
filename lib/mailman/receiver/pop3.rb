@@ -17,6 +17,7 @@ module Mailman
       # @option options [String] :password the password to authenticate with
       # @option options [true,false,Hash] :ssl enable SSL
       def initialize(options)
+        options = {:keep_messages => false}.merge(options)
         @processor = options[:processor]
         @username = options[:username]
         @password = options[:password]
@@ -29,6 +30,7 @@ module Mailman
         end
         @connection.open_timeout = options[:open_timeout] if options[:open_timeout]
         @connection.read_timeout = options[:read_timeout] if options[:read_timeout]
+        @keep_messages = options[:keep_messages]
       end
 
       # Connects to the POP3 server.
@@ -52,7 +54,7 @@ module Mailman
             next
           end
         end
-        @connection.delete_all
+        @connection.delete_all unless @keep_messages
       end
 
       def started?

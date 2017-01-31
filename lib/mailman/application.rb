@@ -82,7 +82,7 @@ module Mailman
 
       # POP3
       elsif config.pop3
-        options = {:processor => @processor}.merge(config.pop3)
+        options = {:processor => @processor, :keep_messages => false}.merge(config.pop3)
         Mailman.logger.info "POP3 receiver enabled (#{options[:username]}@#{options[:server]})."
         polling_loop Receiver::POP3.new(options)
 

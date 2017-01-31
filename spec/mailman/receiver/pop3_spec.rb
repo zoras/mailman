@@ -38,6 +38,13 @@ describe Mailman::Receiver::POP3 do
       @receiver.get_messages
       expect(@receiver.connection.mails).to be_empty
     end
+
+    it 'should not delete the messages after processing if keep_messages is true' do
+      @receiver_options[:keep_messages] = true
+      @receiver = Mailman::Receiver::POP3.new(@receiver_options)
+      @receiver.get_messages
+      expect(@receiver.connection.mails).not_to be_empty
+    end
   end
 
   describe 'started connection' do
